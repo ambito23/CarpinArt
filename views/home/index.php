@@ -12,17 +12,7 @@ $first = $slides[0] ?? [
 ];
 ?>
 
-<!-- COMPROBACIÓN TEMPORAL: quitar después de revisar -->
-<div style="position:relative;z-index:999999;background:#f5e6d3;color:#3b2418;padding:15px;margin:10px;border:2px solid #8b5e3c;">
-    <strong>Diagnóstico CarpinArt</strong><br>
-    Cantidad de diapositivas: <?= count($slides); ?><br>
-    <?php if (!empty($slides)): ?>
-        Primera diapositiva: <?= e($first['titulo'] ?? 'Sin título'); ?><br>
-        Imagen registrada: <?= e($first['imagen'] ?? 'Sin imagen registrada'); ?>
-    <?php else: ?>
-        No se recibieron diapositivas desde el controlador.
-    <?php endif; ?>
-</div>
+
 
 <main>
 <section class="hero" id="inicio">
