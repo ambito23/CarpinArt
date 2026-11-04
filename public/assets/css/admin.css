@@ -1,0 +1,492 @@
+/* =====================================================
+   CARPIN ART - ESTILOS DEL PANEL DE ADMINISTRACIÓN
+   ===================================================== */
+
+/* TEXTOS GENERALES */
+.admin-body {
+    background: #f7f1e8;
+    color: #16110e;
+}
+
+.admin-body .admin-main {
+    color: #16110e;
+}
+
+.admin-body .admin-main h1,
+.admin-body .admin-main h2,
+.admin-body .admin-main h3,
+.admin-body .admin-main h4 {
+    color: #100c0a;
+}
+
+.admin-body .admin-main p,
+.admin-body .admin-main span,
+.admin-body .admin-main label {
+    color: inherit;
+}
+
+/* TARJETAS */
+.admin-body .admin-card,
+.admin-body .stat,
+.admin-body .dash-card,
+.admin-body .dash-kpi {
+    background: #fffaf3;
+    color: #16110e;
+}
+
+.admin-body .admin-card h1,
+.admin-body .admin-card h2,
+.admin-body .admin-card h3,
+.admin-body .stat h2,
+.admin-body .stat h3 {
+    color: #6a5c52;
+}
+
+/* TEXTOS SECUNDARIOS */
+.admin-body .dash-sub,
+.admin-body .dash-empty,
+.admin-body .dash-date,
+.admin-body .dash-top span,
+.admin-body .dash-kpi-hint {
+    color: #6a5c52;
+}
+
+/* TABLAS */
+.admin-body .admin-table {
+    background: #fffaf3;
+    color: #16110e;
+}
+
+.admin-body .admin-table th {
+    background: #efe6d8;
+    color: #100c0a;
+    font-weight: 600;
+}
+
+.admin-body .admin-table td {
+    color: #3d3028;
+    border-bottom: 1px solid #dfd2c1;
+}
+
+.admin-body .admin-table tr:hover td {
+    background: #f7f1e8;
+}
+
+/* FORMULARIOS */
+.admin-body .field,
+.admin-body textarea.field,
+.admin-body select.field {
+    background: #fffaf3;
+    color: #16110e;
+    border: 1px solid #c4a574;
+}
+
+.admin-body .field::placeholder {
+    color: #8a7462;
+    opacity: 1;
+}
+
+.admin-body .field:focus {
+    outline: none;
+    border-color: #9a5c2e;
+    box-shadow: 0 0 0 3px rgba(154, 92, 46, .15);
+}
+
+/* BOTONES */
+.admin-body .btn {
+    background: #9a5c2e;
+    color: #fff !important;
+}
+
+.admin-body .btn:hover {
+    background: #6a3d20;
+}
+
+.admin-body .btn-ghost {
+    background: #efe6d8;
+    color: #16110e !important;
+}
+
+.admin-body .btn-ghost:hover {
+    background: #c4a574;
+    color: #100c0a !important;
+}
+
+/* MENÚ LATERAL */
+.admin-body .admin-side {
+    background: #100c0a;
+    color: #f7f1e8;
+}
+
+.admin-body .admin-side a {
+    color: #efe6d8;
+}
+
+.admin-body .admin-side a:hover,
+.admin-body .admin-side a.is-active {
+    background: #6a3d20;
+    color: #fff !important;
+}
+
+/* INDICADORES */
+.admin-body .dash-kpi strong,
+.admin-body .stat b {
+    color: #9a5c2e;
+}
+
+.admin-body .dash-kpi-label {
+    color: #6a5c52;
+}
+
+/* GRÁFICAS */
+.admin-body .dash-bar-val,
+.admin-body .dash-bar-n {
+    color: #6a5c52;
+}
+
+.admin-body .dash-bar-lab {
+    color: #16110e;
+}
+
+/* ETIQUETAS */
+.admin-body .dash-badge {
+    color: #16110e;
+}
+
+/* ENLACES */
+.admin-body .admin-main a:not(.btn):not(.dash-kpi) {
+    color: #9a5c2e;
+}
+
+.admin-body .admin-main a:not(.btn):not(.dash-kpi):hover {
+    color: #6a3d20;
+}
+
+/* MENSAJES */
+.admin-body .adm-flash.ok {
+    background: #e1eadb;
+    color: #304b2b;
+}
+
+.admin-body .adm-flash.err {
+    background: #f3dfd9;
+    color: #762f25;
+}
+
+
+/* =====================================================
+   CARPIN ART - PÁGINA DE PRESENTACIÓN DEL EQUIPO
+   Requiere class="pagina-presentacion" en el body
+   ===================================================== */
+
+.pagina-presentacion {
+    --pres-cafe-oscuro: #34251d;
+    --pres-cafe: #604333;
+    --pres-beige: #e8d6c1;
+    --pres-crema: #faf6f0;
+    --pres-blanco: #ffffff;
+    --pres-texto: #51453b;
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--pres-crema);
+    color: var(--pres-texto);
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+.pagina-presentacion *,
+.pagina-presentacion *::before,
+.pagina-presentacion *::after {
+    box-sizing: border-box;
+}
+
+.pagina-presentacion img {
+    max-width: 100%;
+    display: block;
+}
+
+.pagina-presentacion a {
+    text-decoration: none;
+}
+
+/* ENCABEZADO */
+.pagina-presentacion .encabezado {
+    padding: 22px 8%;
+    background:#fdfffd;
+    color:#ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.pagina-presentacion .marca {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--pres-blanco);
+}
+
+.pagina-presentacion .marca span {
+    color: var(--pres-beige);
+}
+
+.pagina-presentacion .encabezado p {
+    margin: 0;
+    font-size: 13px;
+    color: #e9daca;
+}
+
+/* PORTADA */
+.pagina-presentacion .portada {
+    min-height: 570px;
+    padding: 75px 8%;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 55px;
+    background: linear-gradient(135deg, #f8efe5, #e6d2bc);
+}
+
+.pagina-presentacion .etiqueta {
+    color: #98704f;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+.pagina-presentacion h1,
+.pagina-presentacion h2,
+.pagina-presentacion h3 {
+    font-family: 'Playfair Display', serif;
+    line-height: 1.2;
+}
+
+.pagina-presentacion h1 {
+    color: var(--pres-cafe-oscuro);
+    font-size: clamp(38px, 5vw, 62px);
+    margin-bottom: 22px;
+}
+
+.pagina-presentacion .introduccion {
+    max-width: 590px;
+    margin-bottom: 30px;
+}
+
+/* BOTONES */
+.pagina-presentacion .boton {
+    display: inline-block;
+    padding: 13px 26px;
+    background: var(--pres-cafe);
+    color: var(--pres-blanco);
+    border-radius: 4px;
+    font-weight: 600;
+    transition: transform .2s, background .2s;
+}
+
+.pagina-presentacion .boton:hover {
+    background: var(--pres-cafe-oscuro);
+    transform: translateY(-2px);
+}
+
+/* IMAGEN DE PORTADA */
+.pagina-presentacion .portada-imagen {
+    min-height: 350px;
+    background: #d3b99e;
+    border: 10px solid rgba(255,255,255,.55);
+    border-radius: 180px 180px 8px 8px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagina-presentacion .portada-imagen img {
+    width: 100%;
+    height: 100%;
+    min-height: 350px;
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+}
+
+.pagina-presentacion .texto-foto {
+    padding: 15px;
+    text-align: center;
+    color: var(--pres-cafe-oscuro);
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+}
+
+.pagina-presentacion .portada-imagen:not(.sin-foto) .texto-foto {
+    display: none;
+}
+
+/* SECCIÓN DEL EQUIPO */
+.pagina-presentacion .nosotras {
+    padding: 85px 8%;
+    text-align: center;
+}
+
+.pagina-presentacion h2 {
+    color: var(--pres-cafe-oscuro);
+    font-size: clamp(30px, 4vw, 43px);
+    margin-bottom: 15px;
+}
+
+.pagina-presentacion .subtitulo {
+    max-width: 620px;
+    margin: 0 auto;
+}
+
+/* TARJETAS DEL EQUIPO */
+.pagina-presentacion .tarjetas {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+    margin-top: 45px;
+    text-align: left;
+}
+
+.pagina-presentacion .tarjeta {
+    background: var(--pres-blanco);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(65,43,27,.08);
+    transition: transform .25s, box-shadow .25s;
+}
+
+.pagina-presentacion .tarjeta:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(65,43,27,.14);
+}
+
+.pagina-presentacion .tarjeta img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.pagina-presentacion .iniciales {
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e8d6c1, #c4a487);
+    color: var(--pres-cafe);
+    font-family: 'Playfair Display', serif;
+    font-size: 55px;
+}
+
+.pagina-presentacion .contenido-tarjeta {
+    padding: 25px;
+}
+
+.pagina-presentacion .contenido-tarjeta h3 {
+    font-size: 22px;
+    color: var(--pres-cafe-oscuro);
+    margin-bottom: 9px;
+}
+
+.pagina-presentacion .cargo {
+    color: #98704f;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.pagina-presentacion .nota {
+    margin-top: 28px;
+    font-size: 13px;
+    color: #78695d;
+}
+
+/* DESPEDIDA */
+.pagina-presentacion .despedida {
+    padding: 70px 8%;
+    text-align: center;
+    background: var(--pres-cafe-oscuro);
+    color: #f6ede4;
+}
+
+.pagina-presentacion .despedida h2 {
+    color: var(--pres-blanco);
+}
+
+.pagina-presentacion .despedida > p:not(.etiqueta) {
+    max-width: 700px;
+    margin: 0 auto 25px;
+}
+
+.pagina-presentacion .boton-claro {
+    background: var(--pres-beige);
+    color: var(--pres-cafe-oscuro);
+}
+
+.pagina-presentacion .boton-claro:hover {
+    background: var(--pres-blanco);
+    color: var(--pres-cafe-oscuro);
+}
+
+/* PIE DE PÁGINA */
+.pagina-presentacion .pie-presentacion {
+    padding: 20px;
+    text-align: center;
+    font-size: 12px;
+    background: #251a14;
+    color: #e9daca;
+}
+
+/* RESPONSIVE */
+@media (max-width: 800px) {
+    .pagina-presentacion .encabezado {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .pagina-presentacion .portada {
+        grid-template-columns: 1fr;
+        padding: 50px 7%;
+        gap: 35px;
+    }
+
+    .pagina-presentacion .portada-imagen,
+    .pagina-presentacion .portada-imagen img {
+        min-height: 300px;
+    }
+
+    .pagina-presentacion .tarjetas {
+        grid-template-columns: 1fr;
+        max-width: 430px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .pagina-presentacion .nosotras {
+        padding: 60px 7%;
+    }
+
+    .pagina-presentacion .despedida {
+        padding: 55px 7%;
+    }
+}
+
+@media (max-width: 450px) {
+    .pagina-presentacion h1 {
+        font-size: 36px;
+    }
+
+    .pagina-presentacion .portada-imagen {
+        border-radius: 120px 120px 8px 8px;
+    }
+
+    .pagina-presentacion .contenido-tarjeta {
+        padding: 20px;
+    }
+}
