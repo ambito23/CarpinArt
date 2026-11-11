@@ -1,4 +1,3 @@
-
 <?php
 
 class Pedido {
@@ -75,15 +74,21 @@ class Pedido {
             return;
         }
 
+        $producto = new Producto();
+
         if ($estado === 'cancelado' && (int) $pedido['stock_aplicado'] === 1) {
-            (new Producto())->ajustarStock((int) $pedido['producto_id'], (int) $pedido['cantidad']);
+            $producto->devolverStock((int) $pedido['producto_id'], (int) $pedido['cantidad']);
             $this->db->prepare("UPDATE pedidos SET estado = :e, stock_aplicado = 0 WHERE id = :id")
                 ->execute([':e' => $estado, ':id' => $id]);
             return;
         }
 
         if ($anterior === 'cancelado' && $estado !== 'cancelado' && (int) $pedido['stock_aplicado'] === 0) {
-            (new Producto())->ajustarStock((int) $pedido['producto_id'], -1 * (int) $pedido['cantidad']);
+            if (!$producto->reservarStock((int) $pedido['producto_id'], (int) $pedido['cantidad'])) {
+                throw new RuntimeException(
+                    'No hay stock suficiente para reactivar este pedido (' . $pedido['producto_nombre'] . ').'
+                );
+            }
             $this->db->prepare("UPDATE pedidos SET estado = :e, stock_aplicado = 1 WHERE id = :id")
                 ->execute([':e' => $estado, ':id' => $id]);
             return;

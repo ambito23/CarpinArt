@@ -15,7 +15,7 @@
         <label>Descripción<textarea class="field" name="descripcion" rows="4"><?= e($p['descripcion'] ?? ''); ?></textarea></label>
         <div class="grid-2">
             <label>Precio<input class="field" type="number" step="0.01" name="precio" value="<?= e($p['precio'] ?? '0'); ?>"></label>
-            <label>Stock<input class="field" type="number" name="stock" value="<?= e($p['stock'] ?? '0'); ?>"></label>
+            <label>Stock<input class="field" type="number" name="stock" min="0" step="1" value="<?= e($p['stock'] ?? '0'); ?>"></label>
             <label>Orden<input class="field" type="number" name="orden" value="<?= e($p['orden'] ?? '1'); ?>"></label>
         </div>
         <label><input type="checkbox" name="destacado" <?= !empty($p['destacado']) ? 'checked' : ''; ?>> Mostrar en el home (máx. 6 destacados)</label>

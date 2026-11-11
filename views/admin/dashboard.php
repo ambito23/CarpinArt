@@ -62,6 +62,25 @@ $donutCss = $donutStops ? implode(', ', $donutStops) : '#efe6d8 0% 100%';
         <p class="dash-date"><?= e(date('d/m/Y')); ?></p>
     </header>
 
+    <?php if (!empty($adminAlertas)): ?>
+        <article class="admin-card dash-card dash-alerts">
+            <div class="dash-card-head">
+                <h2>Alertas operativas</h2>
+                <span><?= (int) count($adminAlertas); ?> activas</span>
+            </div>
+            <ul class="dash-alert-list">
+                <?php foreach ($adminAlertas as $alerta): ?>
+                    <li class="is-<?= e($alerta['nivel']); ?>">
+                        <a href="<?= e($alerta['url']); ?>">
+                            <strong><?= e($alerta['titulo']); ?></strong>
+                            <span><?= e($alerta['texto']); ?></span>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </article>
+    <?php endif; ?>
+
     <div class="dash-kpis">
         <a class="dash-kpi" href="<?= e(url('admin/cotizaciones')); ?>">
             <span class="dash-kpi-label">Cotizaciones</span>

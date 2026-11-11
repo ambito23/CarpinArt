@@ -12,6 +12,9 @@ class AdminController {
             ->query("SELECT COUNT(*) FROM cotizaciones WHERE estado = 'pendiente'")
             ->fetchColumn();
         $data['pedidosNuevos'] = (new Pedido())->pendientes();
+        (new Producto())->corregirStockNegativo();
+        $data['adminAlertas'] = Notificaciones::admin();
+        $data['adminAlertasCount'] = count($data['adminAlertas']);
         extract($data);
         require BASE_PATH . '/views/admin/layout_header.php';
         require BASE_PATH . '/views/admin/' . $vista . '.php';
@@ -123,8 +126,12 @@ class AdminController {
         $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
         $estado = Security::sanitizeString($_POST['estado'] ?? '');
         if ($id && $estado !== '') {
-            (new Pedido())->cambiarEstado($id, $estado);
-            Session::setFlash('success', 'Estado del pedido actualizado.');
+            try {
+                (new Pedido())->cambiarEstado($id, $estado);
+                Session::setFlash('success', 'Estado del pedido actualizado.');
+            } catch (RuntimeException $e) {
+                Session::setFlash('error', $e->getMessage());
+            }
         }
         header('Location: ' . url('admin/pedidos/ver?id=' . (int) $id));
         exit;
@@ -167,7 +174,7 @@ class AdminController {
             'slug'         => $slug,
             'descripcion'  => Security::sanitizeString($_POST['descripcion'] ?? ''),
             'precio'       => filter_input(INPUT_POST, 'precio', FILTER_VALIDATE_FLOAT) ?: 0,
-            'stock'        => (int) ($_POST['stock'] ?? 0),
+            'stock'        => max(0, (int) ($_POST['stock'] ?? 0)),
             'destacado'    => isset($_POST['destacado']) ? 1 : 0,
             'activo'       => isset($_POST['activo']) ? 1 : 0,
             'orden'        => (int) ($_POST['orden'] ?? 1),

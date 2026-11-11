@@ -35,24 +35,36 @@ class PedidoController {
             exit;
         }
 
-        $precio = (float) $producto['precio'];
-        $id = (new Pedido())->crear([
-            ':producto_id'      => (int) $producto['id'],
-            ':producto_nombre'  => $producto['nombre'],
-            ':cantidad'         => $cantidad,
-            ':precio_unitario'  => $precio,
-            ':total'            => $precio * $cantidad,
-            ':usuario_id'       => Session::isLoggedIn() ? Session::user('user_id') : null,
-            ':nombre_contacto'  => $nombre,
-            ':telefono'         => $telefono,
-            ':email'            => $email,
-            ':ciudad'           => Security::sanitizeString($_POST['ciudad'] ?? '') ?: null,
-            ':direccion'        => $direccion,
-            ':notas'            => Security::sanitizeString($_POST['notas'] ?? '') ?: null,
-            ':quiere_whatsapp'  => isset($_POST['quiere_whatsapp']) ? 1 : 0,
-        ]);
+        $productoModel = new Producto();
+        if (!$productoModel->reservarStock((int) $producto['id'], $cantidad)) {
+            Session::setFlash('error', 'Esa pieza se agotó o no hay unidades suficientes.');
+            header('Location: ' . url('#catalogo'));
+            exit;
+        }
 
-        (new Producto())->ajustarStock((int) $producto['id'], -$cantidad);
+        $precio = (float) $producto['precio'];
+        try {
+            $id = (new Pedido())->crear([
+                ':producto_id'      => (int) $producto['id'],
+                ':producto_nombre'  => $producto['nombre'],
+                ':cantidad'         => $cantidad,
+                ':precio_unitario'  => $precio,
+                ':total'            => $precio * $cantidad,
+                ':usuario_id'       => Session::isLoggedIn() ? Session::user('user_id') : null,
+                ':nombre_contacto'  => $nombre,
+                ':telefono'         => $telefono,
+                ':email'            => $email,
+                ':ciudad'           => Security::sanitizeString($_POST['ciudad'] ?? '') ?: null,
+                ':direccion'        => $direccion,
+                ':notas'            => Security::sanitizeString($_POST['notas'] ?? '') ?: null,
+                ':quiere_whatsapp'  => isset($_POST['quiere_whatsapp']) ? 1 : 0,
+            ]);
+        } catch (Throwable $e) {
+            $productoModel->devolverStock((int) $producto['id'], $cantidad);
+            Session::setFlash('error', 'No se pudo registrar el pedido. Inténtalo de nuevo.');
+            header('Location: ' . url('#catalogo'));
+            exit;
+        }
 
         Mailer::confirmacionPedido([
             'id'               => $id,

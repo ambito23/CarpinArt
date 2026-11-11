@@ -49,7 +49,7 @@ class Producto {
             ':slug'         => $d['slug'],
             ':descripcion'  => $d['descripcion'],
             ':precio'       => $d['precio'],
-            ':stock'        => $d['stock'],
+            ':stock'        => max(0, (int) $d['stock']),
             ':destacado'    => $d['destacado'],
             ':activo'       => $d['activo'],
             ':orden'        => $d['orden'],
@@ -102,11 +102,60 @@ class Producto {
         $this->db->prepare("DELETE FROM productos WHERE id = :id")->execute([':id' => $id]);
     }
 
-    public function ajustarStock(int $id, int $delta): void {
-        $stmt = $this->db->prepare("UPDATE productos SET stock = GREATEST(0, stock + :d) WHERE id = :id");
-        $stmt->bindValue(':d', $delta, PDO::PARAM_INT);
+    /** Reserva unidades de forma atómica. Devuelve false si no hay stock suficiente. */
+    public function reservarStock(int $id, int $cantidad): bool {
+        $cantidad = max(1, $cantidad);
+        $stmt = $this->db->prepare(
+            "UPDATE productos SET stock = stock - :c
+             WHERE id = :id AND stock >= :c2"
+        );
+        $stmt->bindValue(':c', $cantidad, PDO::PARAM_INT);
+        $stmt->bindValue(':c2', $cantidad, PDO::PARAM_INT);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
+        return $stmt->rowCount() > 0;
+    }
+
+    /** Devuelve unidades al inventario (p. ej. pedido cancelado). Nunca deja stock negativo. */
+    public function devolverStock(int $id, int $cantidad): void {
+        $cantidad = max(0, $cantidad);
+        if ($cantidad === 0) {
+            return;
+        }
+        $stmt = $this->db->prepare(
+            "UPDATE productos SET stock = stock + :c WHERE id = :id"
+        );
+        $stmt->bindValue(':c', $cantidad, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    /** @deprecated Preferir reservarStock / devolverStock */
+    public function ajustarStock(int $id, int $delta): void {
+        if ($delta < 0) {
+            $this->reservarStock($id, abs($delta));
+            return;
+        }
+        if ($delta > 0) {
+            $this->devolverStock($id, $delta);
+        }
+    }
+
+    public function corregirStockNegativo(): int {
+        return (int) $this->db->exec("UPDATE productos SET stock = 0 WHERE stock < 0");
+    }
+
+    public function conStockBajo(int $umbral = 2): array {
+        $umbral = max(0, $umbral);
+        $stmt = $this->db->prepare(
+            "SELECT id, nombre, stock, activo
+             FROM productos
+             WHERE stock <= :u
+             ORDER BY stock ASC, nombre ASC"
+        );
+        $stmt->bindValue(':u', $umbral, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 
     public function categorias(): array {
